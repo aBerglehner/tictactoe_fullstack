@@ -11,6 +11,6 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return "Tic tac toe !!!";
+        return "Tic tac toe yuhhhh";
     }
 }
