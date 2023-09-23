@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
@@ -7,21 +7,27 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import axios from "axios";
 import ShowGames from "./ShowGames";
 
-const url = "http://localhost:8080/hello/add"; // Replace with the URL you want to send a POST request to
-const headers = {
-  "Content-Type": "application/json", // Specify the Content-Type header
-  // Add any other headers as needed
-};
+const postUrl = "http://localhost:8080/hello/add";
+
 const Content = () => {
-  const [game, setGame] = useState({ you: "", enemy: "", id: 1, turns: 32 });
+  const [createGame, setCreateGame] = useState({ you: "", enemy: "" });
+  const [dataChanged, setDataChanged] = useState(false);
+  const yourName = useRef(null);
+  const enemyName = useRef(null);
+
+  // ref={inputRef}
 
   const handleCreateGame = async () => {
+    // const game = { you: yourName.current, enemy: enemyName.current };
+    console.log("yourName: ", yourName.current);
+
     console.log("handleCreateGame");
-    console.log("game: ", game);
+    // console.log("createGame: ", createGame);
     try {
-      const response = await axios.post(url, game);
-      // const response = await axios.post(url, game, { headers });
-      console.log("response: ", response.data);
+      // await axios.post(postUrl, game);
+      await axios.post(postUrl, createGame);
+      // console.log("post response: ", response.data);
+      setDataChanged((e) => !e);
     } catch (error) {
       console.log(error);
     }
@@ -39,18 +45,24 @@ const Content = () => {
         <p>This is the body of your app.</p>
 
         <TextField
-          onChange={(e) => setGame({ ...game, you: e.target.value })}
+          // ref={yourName}
+          onChange={(e) =>
+            setCreateGame({ ...createGame, you: e.target.value })
+          }
           id="outlined-helperText"
           label="Your name"
-          defaultValue={game.you}
+          defaultValue={createGame.you}
           helperText="Define your Game name"
           sx={{ marginRight: "5px" }}
         />
         <TextField
-          onChange={(e) => setGame({ ...game, enemy: e.target.value })}
+          // ref={enemyName}
+          onChange={(e) =>
+            setCreateGame({ ...createGame, enemy: e.target.value })
+          }
           id="outlined-helperText"
           label="Enemy name"
-          defaultValue={game.enemy}
+          defaultValue={createGame.enemy}
           helperText="Define enemy Game name"
           sx={{ marginRight: "5px" }}
         />
@@ -62,7 +74,7 @@ const Content = () => {
         >
           Create Game
         </Button>
-        <ShowGames />
+        <ShowGames dataChanged={dataChanged} />
       </Paper>
     </Container>
   );

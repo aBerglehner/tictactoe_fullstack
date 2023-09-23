@@ -27,8 +27,9 @@ public class GreetingResource {
     public Response addSomething(Game game) {
         System.out.println("Created Game: ");
         System.out.println("--------------------------------------------------");
-
         list.add(game);
+        Constants.curId++;
+
         return Response.status(201).entity(game).build();
     }
 
