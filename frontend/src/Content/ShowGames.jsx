@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -27,27 +27,17 @@ const columns = [
 //   { id: 9, enemy: "Roxie", you: "Harvey", turns: 65 },
 // ];
 
-const rows = [
-  { id: 1, enemy: "Snow", you: "Jon" },
-  { id: 2, enemy: "Lannister", you: "Cersei" },
-  { id: 3, enemy: "Lannister", you: "Jaime" },
-  { id: 4, enemy: "Stark", you: "Arya" },
-  { id: 5, enemy: "Targaryen", you: "Daenerys" },
-  { id: 6, enemy: "Melisandre", you: null },
-  { id: 7, enemy: "Clifford", you: "Ferrara" },
-  { id: 8, enemy: "Frances", you: "Rossini" },
-  { id: 9, enemy: "Roxie", you: "Harvey" },
-];
 
-const getUrl = "http://localhost:8080/hello";
+const getGamesUrl = "http://localhost:8080/games";
 
-export default function ShowGames({ dataChanged }) {
+const ShowGames = ({ newGamesTrigger }) => {
   const [games, setGames] = useState([]);
-  console.log("games: ", games);
+    console.log('ShowGames render')
+  // console.log("ShowGames: ", games);
 
   const getGames = async () => {
     try {
-      const response = await axios.get(getUrl);
+      const response = await axios.get(getGamesUrl);
       // console.log("get response: ", response.data);
       setGames(response.data);
     } catch (error) {
@@ -57,7 +47,7 @@ export default function ShowGames({ dataChanged }) {
 
   useEffect(() => {
     getGames();
-  }, [dataChanged]);
+  }, [newGamesTrigger]);
 
   return (
     <div style={{ height: "39vh", width: "100%" }}>
@@ -76,8 +66,10 @@ export default function ShowGames({ dataChanged }) {
       />
     </div>
   );
-}
+};
 
 ShowGames.propTypes = {
-  dataChanged: PropTypes.bool.isRequired,
+  newGamesTrigger: PropTypes.bool.isRequired,
 };
+
+export default ShowGames;

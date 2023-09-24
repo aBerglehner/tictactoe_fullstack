@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Path("/hello")
+@Path("/games")
 public class GreetingResource {
     static List<Game> list = new ArrayList<>();
 

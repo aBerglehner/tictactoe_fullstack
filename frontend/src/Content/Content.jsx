@@ -7,27 +7,25 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import axios from "axios";
 import ShowGames from "./ShowGames";
 
-const postUrl = "http://localhost:8080/hello/add";
+const postGameUrl = "http://localhost:8080/games/add";
 
 const Content = () => {
-  const [createGame, setCreateGame] = useState({ you: "", enemy: "" });
-  const [dataChanged, setDataChanged] = useState(false);
-  const yourName = useRef(null);
-  const enemyName = useRef(null);
+  const [newGamesTrigger, setNewGamesTrigger] = useState(false);
+  const yourName = useRef('');
+const enemyName = useRef('');
+    console.log('content render')
 
   // ref={inputRef}
 
   const handleCreateGame = async () => {
-    // const game = { you: yourName.current, enemy: enemyName.current };
-    console.log("yourName: ", yourName.current);
-
+    const game = { you: yourName.current.value, enemy: enemyName.current.value };
     console.log("handleCreateGame");
-    // console.log("createGame: ", createGame);
+    // console.log("yourName: ", yourName.current.value);
+
     try {
-      // await axios.post(postUrl, game);
-      await axios.post(postUrl, createGame);
-      // console.log("post response: ", response.data);
-      setDataChanged((e) => !e);
+      const response = await axios.post(postGameUrl, game);
+      console.log("post response: ", response.data);
+      setNewGamesTrigger((e) => !e);
     } catch (error) {
       console.log(error);
     }
@@ -45,24 +43,18 @@ const Content = () => {
         <p>This is the body of your app.</p>
 
         <TextField
-          // ref={yourName}
-          onChange={(e) =>
-            setCreateGame({ ...createGame, you: e.target.value })
-          }
+          inputRef={yourName}
           id="outlined-helperText"
           label="Your name"
-          defaultValue={createGame.you}
+          defaultValue={yourName.current}
           helperText="Define your Game name"
           sx={{ marginRight: "5px" }}
         />
         <TextField
-          // ref={enemyName}
-          onChange={(e) =>
-            setCreateGame({ ...createGame, enemy: e.target.value })
-          }
+          inputRef={enemyName}
           id="outlined-helperText"
           label="Enemy name"
-          defaultValue={createGame.enemy}
+          defaultValue={enemyName.current}
           helperText="Define enemy Game name"
           sx={{ marginRight: "5px" }}
         />
@@ -74,7 +66,7 @@ const Content = () => {
         >
           Create Game
         </Button>
-        <ShowGames dataChanged={dataChanged} />
+        <ShowGames newGamesTrigger={newGamesTrigger} />
       </Paper>
     </Container>
   );
