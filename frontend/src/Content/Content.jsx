@@ -4,21 +4,24 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import Grid from "@mui/material/Grid";
 import axios from "axios";
 import ShowGames from "./ShowGames";
+import TicTacToe from "./TicTacToe";
 
 const postGameUrl = "http://localhost:8080/games/add";
 
 const Content = () => {
   const [newGamesTrigger, setNewGamesTrigger] = useState(false);
-  const yourName = useRef('');
-const enemyName = useRef('');
-    console.log('content render')
-
-  // ref={inputRef}
+  const yourName = useRef("");
+  const enemyName = useRef("");
+  console.log("content render");
 
   const handleCreateGame = async () => {
-    const game = { you: yourName.current.value, enemy: enemyName.current.value };
+    const game = {
+      you: yourName.current.value,
+      enemy: enemyName.current.value,
+    };
     console.log("handleCreateGame");
     // console.log("yourName: ", yourName.current.value);
 
@@ -33,9 +36,10 @@ const enemyName = useRef('');
 
   return (
     <Container
+      maxWidth="false"
       sx={{
         flexGrow: 1,
-        padding: 3,
+        padding: 2,
       }}
     >
       <Paper elevation={3} sx={{ p: 2, minHeight: "84vh" }}>
@@ -66,7 +70,14 @@ const enemyName = useRef('');
         >
           Create Game
         </Button>
-        <ShowGames newGamesTrigger={newGamesTrigger} />
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <ShowGames newGamesTrigger={newGamesTrigger} />
+          </Grid>
+          <Grid item xs={4}>
+            <TicTacToe />
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   );

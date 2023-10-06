@@ -27,12 +27,11 @@ const columns = [
 //   { id: 9, enemy: "Roxie", you: "Harvey", turns: 65 },
 // ];
 
-
 const getGamesUrl = "http://localhost:8080/games";
 
 const ShowGames = ({ newGamesTrigger }) => {
   const [games, setGames] = useState([]);
-    console.log('ShowGames render')
+  console.log("ShowGames render");
   // console.log("ShowGames: ", games);
 
   const getGames = async () => {
