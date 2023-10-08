@@ -14,7 +14,7 @@ public class GreetingResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response hello() {
+    public Response showAllGames() {
         System.out.println("printed all GAMES get api: ");
         System.out.println("--------------------------------------------------");
         return Response.ok(list).build();
@@ -24,7 +24,7 @@ public class GreetingResource {
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON) // Specify the expected media type for request
-    public Response addSomething(Game game) {
+    public Response addGame(Game game) {
         System.out.println("Created Game: ");
         System.out.println("--------------------------------------------------");
         list.add(game);

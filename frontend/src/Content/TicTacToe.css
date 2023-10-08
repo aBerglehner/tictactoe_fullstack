@@ -1,0 +1,21 @@
+.container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 75rem);
+  align-items: center;
+  justify-content: center;
+}
+
+table td {
+  border: 1px solid grey;
+  width: 10rem;
+  height: 10rem;
+}
+
+table th {
+  font-size: 1.5rem;
+}
+table td {
+  font-size: 2rem;
+}

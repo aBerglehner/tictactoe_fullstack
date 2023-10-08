@@ -2,6 +2,7 @@ import React, { useEffect, useState, memo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { getGamesUrl } from "../Constants/Apis";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -26,8 +27,6 @@ const columns = [
 //   { id: 8, enemy: "Frances", you: "Rossini", turns: 36 },
 //   { id: 9, enemy: "Roxie", you: "Harvey", turns: 65 },
 // ];
-
-const getGamesUrl = "http://localhost:8080/games";
 
 const ShowGames = ({ newGamesTrigger }) => {
   const [games, setGames] = useState([]);

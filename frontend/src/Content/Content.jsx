@@ -8,8 +8,7 @@ import Grid from "@mui/material/Grid";
 import axios from "axios";
 import ShowGames from "./ShowGames";
 import TicTacToe from "./TicTacToe";
-
-const postGameUrl = "http://localhost:8080/games/add";
+import { postGameUrl } from "../Constants/Apis";
 
 const Content = () => {
   const [newGamesTrigger, setNewGamesTrigger] = useState(false);
@@ -44,7 +43,7 @@ const Content = () => {
     >
       <Paper elevation={3} sx={{ p: 2, minHeight: "84vh" }}>
         <h1>Welcome to Your App</h1>
-        <p>This is the body of your app.</p>
+        <p>Create your new Game:</p>
 
         <TextField
           inputRef={yourName}
@@ -71,10 +70,10 @@ const Content = () => {
           Create Game
         </Button>
         <Grid container spacing={2}>
-          <Grid item xs={8}>
+          <Grid item xs={7}>
             <ShowGames newGamesTrigger={newGamesTrigger} />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={5}>
             <TicTacToe />
           </Grid>
         </Grid>
