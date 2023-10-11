@@ -29,10 +29,11 @@ public class TicTacToe {
     @Path("/cell")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response evaluateGame(Cell cell) {
-        System.out.println("modified cell: ");
+        System.out.println("post request clicked on cell: ");
         System.out.println("--------------------------------------------------");
 
-        cell.setTurn("modified");
+        cell.handleTurn();
+        cell.swapTurn();
 
         return Response.status(201).entity(cell).build();
     }
