@@ -14,6 +14,7 @@ const Content = () => {
   const [newGamesTrigger, setNewGamesTrigger] = useState(false);
   const yourName = useRef("");
   const enemyName = useRef("");
+  const curGame = useRef("");
   console.log("content render");
 
   const handleCreateGame = async () => {
@@ -26,7 +27,10 @@ const Content = () => {
 
     try {
       const response = await axios.post(postGameUrl, game);
+      // const response = await axios.put(postGameUrl + "/1");
       console.log("post response: ", response.data);
+      curGame.current = response.data.id;
+      // console.log("curGame: ", curGame.current);
       setNewGamesTrigger((e) => !e);
     } catch (error) {
       console.log(error);
@@ -74,7 +78,7 @@ const Content = () => {
             <ShowGames newGamesTrigger={newGamesTrigger} />
           </Grid>
           <Grid item xs={5}>
-            <TicTacToe />
+            <TicTacToe curGame={curGame.current} />
           </Grid>
         </Grid>
       </Paper>

@@ -4,10 +4,16 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { getGamesUrl } from "../Constants/Apis";
 
+// cells, num, turn, winner
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 50 },
   { field: "you", headerName: "Your name", width: 130 },
   { field: "enemy", headerName: "Enemy name", width: 130 },
+  { field: "cells", headerName: "Cells", width: 240 },
+  { field: "num", headerName: "Num", width: 50 },
+  { field: "turn", headerName: "Current Turn", width: 100 },
+  { field: "winner", headerName: "Winner", width: 80 },
+  { field: "status", headerName: "Status", width: 80 },
   // {
   //   field: "turns",
   //   headerName: "Turns",

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import "./TicTacToe.css";
+import PropTypes from "prop-types";
+import Button from "@mui/material/Button";
 import Cell from "./Cell";
 
-const TicTacToe = () => {
+const TicTacToe = ({ curGame }) => {
   const [turn, setTurn] = useState("x");
   const [cells, setCells] = useState(Array.from({ length: 9 }, () => ""));
   const [winner, setWinner] = useState("");
+
+  console.log("curGame: ", curGame);
 
   const handleRestart = () => {
     setWinner("");
@@ -113,11 +117,16 @@ const TicTacToe = () => {
       {winner && (
         <>
           <p>{winner} is the winner!!!</p>
-          <button onClick={handleRestart}>Play Again</button>
+          <Button variant="contained" onClick={handleRestart}>
+            Play Again
+          </Button>
         </>
       )}
     </div>
   );
 };
 
+TicTacToe.propTypes = {
+  curGame: PropTypes.number,
+};
 export default TicTacToe;
