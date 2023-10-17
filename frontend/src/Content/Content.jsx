@@ -27,7 +27,8 @@ const Content = () => {
 
     try {
       const response = await axios.post(postGameUrl, game);
-      // const response = await axios.put(postGameUrl + "/1");
+      // const response2 = await axios.put(postGameUrl + "/3");
+      // console.log("put res: ", response2);
       console.log("post response: ", response.data);
       curGame.current = response.data.id;
       // console.log("curGame: ", curGame.current);

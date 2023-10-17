@@ -6,7 +6,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 @Path("/games")
@@ -40,10 +42,13 @@ public class GreetingResource {
     public Response modifyGame(@PathParam("id") int id) {
         System.out.println("modifyGame: ");
         System.out.println("--------------------------------------------------");
-        Game game = Constants.list.get(id - 1);
-        game.setYou("updated");
+//        () -> Arrays.stream(Constants.list)
+        Optional<Game> searchedGame = Constants.list.stream().filter(game -> game.getId() == id).findFirst();
+        Constants.list.forEach(e -> System.out.println(e.getId()));
+//        Game game = Constants.list.get(id - 1);
+        searchedGame.ifPresent(game -> game.setYou("changed!!!"));
 
-        return Response.status(204).entity(game).build();
+        return Response.status(204).entity(searchedGame).build();
     }
 
 }
