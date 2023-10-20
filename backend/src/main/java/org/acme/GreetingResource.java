@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Path("/games")
@@ -23,13 +25,26 @@ public class GreetingResource {
         return Response.ok(Constants.list).build();
     }
 
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGameById(@PathParam("id") int id) {
+        System.out.println("get game by id api: ");
+        System.out.println("--------------------------------------------------");
+        Optional<Game> searchedGame = Constants.list.stream().filter(game -> game.getId() == id).findFirst();
+        return Response.ok(searchedGame).build();
+    }
 
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON) // Specify the expected media type for request
     public Response addGame(Game game) {
-        System.out.println("Created Game: ");
+        System.out.println("Created Game / post api: ");
         System.out.println("--------------------------------------------------");
+        List<String> cellList = IntStream.rangeClosed(0, 8).mapToObj(String::valueOf).map(e -> "").toList();
+        game.setCells(cellList);
+        game.setTurn("x");
+        game.setWinner("");
         Constants.list.add(game);
         Constants.curId++;
 
@@ -40,7 +55,7 @@ public class GreetingResource {
     @Path("/add/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyGame(@PathParam("id") int id) {
-        System.out.println("modifyGame: ");
+        System.out.println("modifyGame / put api: ");
         System.out.println("--------------------------------------------------");
 //        () -> Arrays.stream(Constants.list)
         Optional<Game> searchedGame = Constants.list.stream().filter(game -> game.getId() == id).findFirst();

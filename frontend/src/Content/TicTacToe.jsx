@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TicTacToe.css";
+import axios from "axios";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Cell from "./Cell";
+import { getGamesUrl } from "../Constants/Apis";
 
 const TicTacToe = ({ curGame }) => {
   const [turn, setTurn] = useState("x");
@@ -10,6 +12,21 @@ const TicTacToe = ({ curGame }) => {
   const [winner, setWinner] = useState("");
 
   console.log("curGame: ", curGame);
+
+  const getGame = async (id) => {
+    try {
+      const gameUrl = `${getGamesUrl}/${id}`;
+      const response = await axios.get(gameUrl);
+      console.log("gameUrl response: ", response.data);
+      // setGames(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getGame(curGame);
+  }, [curGame]);
 
   const handleRestart = () => {
     setWinner("");
