@@ -10,15 +10,28 @@ const TicTacToe = ({ curGame }) => {
   const [turn, setTurn] = useState("x");
   const [cells, setCells] = useState(Array.from({ length: 9 }, () => ""));
   const [winner, setWinner] = useState("");
+  const [game, setGame] = useState({
+    cells: Array.from({ length: 9 }, () => ""),
+    error: "",
+    id: null,
+    num: -1,
+    turn: "",
+    winner: "",
+    you: "",
+    enemey: "",
+  });
 
   console.log("curGame: ", curGame);
+  console.log("game: ", game);
 
   const getGame = async (id) => {
     try {
-      const gameUrl = `${getGamesUrl}/${id}`;
-      const response = await axios.get(gameUrl);
-      console.log("gameUrl response: ", response.data);
-      // setGames(response.data);
+      if (id !== "") {
+        const gameUrl = `${getGamesUrl}/${id}`;
+        const response = await axios.get(gameUrl);
+        console.log("gameUrl response: ", response.data);
+        setGame(response.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -43,91 +56,19 @@ const TicTacToe = ({ curGame }) => {
         </thead>
         <tbody>
           <tr>
-            <Cell
-              cells={cells}
-              num={0}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
-            <Cell
-              cells={cells}
-              num={1}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
-            <Cell
-              cells={cells}
-              num={2}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
+            <Cell game={game} setGame={setGame} num={0} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={1} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={2} gameId={curGame} />
           </tr>
           <tr>
-            <Cell
-              cells={cells}
-              num={3}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
-            <Cell
-              cells={cells}
-              num={4}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
-            <Cell
-              cells={cells}
-              num={5}
-              winner={winner}
-              turn={turn}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
+            <Cell game={game} setGame={setGame} num={3} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={4} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={5} gameId={curGame} />
           </tr>
           <tr>
-            <Cell
-              cells={cells}
-              num={6}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
-            <Cell
-              cells={cells}
-              num={7}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
-            <Cell
-              cells={cells}
-              num={8}
-              turn={turn}
-              winner={winner}
-              setTurn={setTurn}
-              setCells={setCells}
-              setWinner={setWinner}
-            />
+            <Cell game={game} setGame={setGame} num={6} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={7} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={8} gameId={curGame} />
           </tr>
         </tbody>
       </table>
@@ -144,6 +85,6 @@ const TicTacToe = ({ curGame }) => {
 };
 
 TicTacToe.propTypes = {
-  curGame: PropTypes.number,
+  curGame: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 export default TicTacToe;

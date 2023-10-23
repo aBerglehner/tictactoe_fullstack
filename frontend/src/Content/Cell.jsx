@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { postTicTacToeCell } from "../Constants/Apis";
+import { getGamesUrl } from "../Constants/Apis";
 
 // cells={cells}
 // num={8}
@@ -10,14 +11,17 @@ import { postTicTacToeCell } from "../Constants/Apis";
 // setCells={setCells}
 // setWinner={setWinner}
 
-const Cell = ({ cells, num, turn, winner, setTurn, setCells, setWinner }) => {
-  const handleClick = async () => {
+const Cell = ({ game, setGame, num, gameId }) => {
+  const { cells, error, id, turn, winner, you, enemy } = game;
+  const handleClick = async (id) => {
     // console.log("clicked on: ", num);
     const cellData = { cells, num, turn, winner };
     console.log("cellData: ", cellData);
 
     try {
-      const response = await axios.post(postTicTacToeCell, cellData);
+      // const response = await axios.post(postTicTacToeCell, cellData);
+      const gameUrl = `${getGamesUrl}/${id}`;
+      const response = await axios.put(gameUrl);
       console.log("post cell response: ", response.data);
 
       const { cells, turn, error, winner } = response.data;
@@ -26,11 +30,11 @@ const Cell = ({ cells, num, turn, winner, setTurn, setCells, setWinner }) => {
       } else {
         console.log("winner: ", winner);
         if (winner) {
-          setWinner(winner);
+          // setWinner(winner);
         } else {
-          setTurn(turn);
+          // setTurn(turn);
         }
-        setCells(cells);
+        // setCells(cells);
       }
 
       //todo
@@ -39,17 +43,26 @@ const Cell = ({ cells, num, turn, winner, setTurn, setCells, setWinner }) => {
     }
   };
 
-  return <td onClick={handleClick}>{cells[num]}</td>;
+  // return <td onClick={handleClick}>{cells[num]}</td>;
+  return <td>1</td>;
+};
+
+const GamePropTypes = {
+  cells: PropTypes.array.isRequired,
+  error: PropTypes.string,
+  id: PropTypes.number,
+  num: PropTypes.number.isRequired,
+  turn: PropTypes.string,
+  winner: PropTypes.string,
+  you: PropTypes.string,
+  enemy: PropTypes.string,
 };
 
 Cell.propTypes = {
-  cells: PropTypes.arrayOf(PropTypes.string).isRequired,
+  game: PropTypes.shape(GamePropTypes).isRequired,
+  setGame: PropTypes.func,
   num: PropTypes.number.isRequired,
-  turn: PropTypes.string.isRequired,
-  winner: PropTypes.string,
-  setTurn: PropTypes.func,
-  setCells: PropTypes.func,
-  setWinner: PropTypes.func,
+  gameId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default Cell;
