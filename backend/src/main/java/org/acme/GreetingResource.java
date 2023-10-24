@@ -25,6 +25,27 @@ public class GreetingResource {
         return Response.ok(Constants.list).build();
     }
 
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyGame(Cell cell) {
+        System.out.println("modifyGame / put api: ");
+        System.out.println("--------------------------------------------------");
+
+
+//        cell.handleTurn();
+//        cell.swapTurn();
+        Optional<Game> searchedGame = Constants.list.stream().filter(e -> e.getId() == cell.getId()).findFirst();
+        if (searchedGame.isPresent()) {
+            searchedGame.get().setYou("modified");
+//            searchedGame.get().handleTurn(cell.getId());
+//            searchedGame.get().swapTurn();
+        }
+
+
+//        return Response.status(204).entity(game).build();
+        return Response.ok(searchedGame).build();
+    }
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -35,22 +56,6 @@ public class GreetingResource {
         return Response.ok(searchedGame).build();
     }
 
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyGame(@PathParam("id") int id) {
-        System.out.println("modifyGame / put api: ");
-        System.out.println("--------------------------------------------------");
-//        () -> Arrays.stream(Constants.list)
-        Optional<Game> searchedGame = Constants.list.stream().filter(game -> game.getId() == id).findFirst();
-        Constants.list.forEach(e -> System.out.println(e.getId()));
-//        Game game = Constants.list.get(id - 1);
-        searchedGame.ifPresent(game -> game.setYou("changed!!!"));
-
-//        return Response.status(204).entity(searchedGame).build();
-        return Response.status(204).entity(Constants.list).build();
-    }
-
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON) // Specify the expected media type for request
@@ -59,7 +64,6 @@ public class GreetingResource {
         System.out.println("--------------------------------------------------");
         List<String> cellList = IntStream.rangeClosed(0, 8).mapToObj(String::valueOf).map(e -> "").toList();
         game.setCells(cellList);
-        game.setNum(-1);
         game.setTurn("x");
         game.setWinner("");
         Constants.list.add(game);

@@ -7,33 +7,25 @@ import java.util.List;
 public class Game {
     public int id;
     public String enemy;
+    public String error;
 
     public String you;
 
     //new
     public List<String> cells;
-    public int num;
     public String turn;
-    public String error;
     public String winner;
 
-    //old
-//    public Game(String enemy, String you) {
-//        this.enemy = "myTest";
-//        this.you = "myTest";
-//        this.id = Constants.curId;
-//    }
-
-    public Game(int id, String enemy, String you, List<String> cells, int num, String turn) {
-        this.enemy = enemy;
+    public Game(int id, String enemy, String you, List<String> cells, String turn, String error) {
         this.you = you;
+        this.enemy = enemy;
+        this.error = error;
         if (id == 0) {
             this.id = Constants.curId;
         } else {
             this.id = id;
         }
         this.cells = cells;
-        this.num = num;
         this.turn = turn;
     }
 
@@ -49,20 +41,8 @@ public class Game {
         this.you = you;
     }
 
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
     public void setCells(List<String> cells) {
         this.cells = cells;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
 
     public void setTurn(String turn) {
@@ -71,10 +51,6 @@ public class Game {
 
     public List<String> getCells() {
         return cells;
-    }
-
-    public int getNum() {
-        return num;
     }
 
     public String getTurn() {
@@ -89,7 +65,24 @@ public class Game {
         this.winner = winner;
     }
 
-    public void handleTurn() {
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    //real methods starts here add Lombok
+    public void swapTurn() {
+        if (this.turn.equals("x")) {
+            setTurn("o");
+        } else {
+            setTurn("x");
+        }
+    }
+
+    public void handleTurn(int num) {
         if (!winner.equals("")) {
             setError(turn + " already won the game");
         } else if (cells.get(num).equals("")) {
@@ -99,14 +92,6 @@ public class Game {
             }
         } else {
             setError("try free field");
-        }
-    }
-
-    public void swapTurn() {
-        if (this.turn.equals("x")) {
-            setTurn("o");
-        } else {
-            setTurn("x");
         }
     }
 
@@ -130,4 +115,5 @@ public class Game {
 
         return false;
     }
+
 }

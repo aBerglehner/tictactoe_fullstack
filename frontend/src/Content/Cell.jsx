@@ -13,16 +13,17 @@ import { getGamesUrl } from "../Constants/Apis";
 
 const Cell = ({ game, setGame, num, gameId }) => {
   const { cells, error, id, turn, winner, you, enemy } = game;
+
   const handleClick = async (id) => {
     // console.log("clicked on: ", num);
     const cellData = { cells, num, turn, winner };
     console.log("cellData: ", cellData);
 
     try {
-      // const response = await axios.post(postTicTacToeCell, cellData);
-      const gameUrl = `${getGamesUrl}/${id}`;
-      const response = await axios.put(gameUrl);
-      console.log("post cell response: ", response.data);
+      const putRes = { ...game, num };
+      console.log("putRes: ", putRes);
+      const response = await axios.put(getGamesUrl, putRes);
+      console.log("put cell response: ", response.data);
 
       const { cells, turn, error, winner } = response.data;
       if (error) {
@@ -43,15 +44,14 @@ const Cell = ({ game, setGame, num, gameId }) => {
     }
   };
 
-  // return <td onClick={handleClick}>{cells[num]}</td>;
-  return <td>1</td>;
+  return <td onClick={handleClick}>{cells[num]}</td>;
+  // return <td onClick={handleClick}>1</td>;
 };
 
 const GamePropTypes = {
   cells: PropTypes.array.isRequired,
   error: PropTypes.string,
   id: PropTypes.number,
-  num: PropTypes.number.isRequired,
   turn: PropTypes.string,
   winner: PropTypes.string,
   you: PropTypes.string,
