@@ -7,8 +7,8 @@ import java.util.List;
 public class Cell extends Game {
     public int num;
 
-    public Cell(int id, String enemy, String you, List<String> cells, String turn, String error, int num) {
-        super(id, enemy, you, cells, turn, error);
+    public Cell(int id, String enemy, String you, List<String> cells, String turn, String error, String status, int num) {
+        super(id, enemy, you, cells, turn, error, status);
         this.num = num;
     }
 

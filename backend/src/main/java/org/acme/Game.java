@@ -1,25 +1,25 @@
 package org.acme;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Game {
     public int id;
+    public String you;
     public String enemy;
     public String error;
-
-    public String you;
-
-    //new
+    public String status;
     public List<String> cells;
     public String turn;
     public String winner;
 
-    public Game(int id, String enemy, String you, List<String> cells, String turn, String error) {
+    public Game(int id, String enemy, String you, List<String> cells, String turn, String error, String status) {
         this.you = you;
         this.enemy = enemy;
         this.error = error;
+        this.status = status;
         if (id == 0) {
             this.id = Constants.curId;
         } else {
@@ -27,6 +27,14 @@ public class Game {
         }
         this.cells = cells;
         this.turn = turn;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -75,6 +83,9 @@ public class Game {
 
     //real methods starts here add Lombok
     public void swapTurn() {
+        if (!this.winner.isEmpty() || !this.error.isEmpty()) {
+            return;
+        }
         if (this.turn.equals("x")) {
             setTurn("o");
         } else {
@@ -83,12 +94,12 @@ public class Game {
     }
 
     public void handleTurn(int num) {
-        if (!winner.equals("")) {
-            setError(turn + " already won the game");
-        } else if (cells.get(num).equals("")) {
-            cells.set(num, turn);
-            if (checkIfGameWon(turn, cells)) {
-                setWinner(turn);
+        if (!this.winner.isEmpty()) {
+            setError(this.turn + " already won the game");
+        } else if (this.cells.get(num).isEmpty()) {
+            this.cells.set(num, this.turn);
+            if (checkIfGameWon(this.turn, this.cells)) {
+                setWinner(this.turn);
             }
         } else {
             setError("try free field");

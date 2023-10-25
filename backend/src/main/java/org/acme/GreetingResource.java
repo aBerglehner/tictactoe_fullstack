@@ -15,7 +15,6 @@ import java.util.stream.IntStream;
 
 @Path("/games")
 public class GreetingResource {
-//    static List<Game> list = new ArrayList<>();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,18 +30,30 @@ public class GreetingResource {
         System.out.println("modifyGame / put api: ");
         System.out.println("--------------------------------------------------");
 
-
-//        cell.handleTurn();
-//        cell.swapTurn();
         Optional<Game> searchedGame = Constants.list.stream().filter(e -> e.getId() == cell.getId()).findFirst();
         if (searchedGame.isPresent()) {
-            searchedGame.get().setYou("modified");
-//            searchedGame.get().handleTurn(cell.getId());
-//            searchedGame.get().swapTurn();
+            searchedGame.get().setError("");
+            searchedGame.get().setStatus("playing");
+            searchedGame.get().handleTurn(cell.getNum());
+            searchedGame.get().swapTurn();
         }
+        return Response.ok(searchedGame).build();
+    }
 
+    @PUT
+    @Path("/restart")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response restartGame(Game game) {
+        System.out.println("restartGame / put api: ");
+        System.out.println("--------------------------------------------------");
 
-//        return Response.status(204).entity(game).build();
+        Optional<Game> searchedGame = Constants.list.stream().filter(e -> e.getId() == game.getId()).findFirst();
+        if (searchedGame.isPresent()) {
+            searchedGame.get().setError("");
+            List<String> cellList = IntStream.rangeClosed(0, 8).mapToObj(String::valueOf).map(e -> "").collect(Collectors.toList());
+            searchedGame.get().setCells(cellList);
+            searchedGame.get().setWinner("");
+        }
         return Response.ok(searchedGame).build();
     }
 
@@ -62,7 +73,7 @@ public class GreetingResource {
     public Response addGame(Game game) {
         System.out.println("Created Game / post api: ");
         System.out.println("--------------------------------------------------");
-        List<String> cellList = IntStream.rangeClosed(0, 8).mapToObj(String::valueOf).map(e -> "").toList();
+        List<String> cellList = IntStream.rangeClosed(0, 8).mapToObj(String::valueOf).map(e -> "").collect(Collectors.toList());
         game.setCells(cellList);
         game.setTurn("x");
         game.setWinner("");

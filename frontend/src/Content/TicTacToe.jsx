@@ -4,12 +4,9 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Cell from "./Cell";
-import { getGamesUrl } from "../Constants/Apis";
+import { getGamesUrl, putRestartUrl } from "../Constants/Apis";
 
 const TicTacToe = ({ curGame }) => {
-  const [turn, setTurn] = useState("x");
-  const [cells, setCells] = useState(Array.from({ length: 9 }, () => ""));
-  const [winner, setWinner] = useState("");
   const [game, setGame] = useState({
     cells: Array.from({ length: 9 }, () => ""),
     error: "",
@@ -21,8 +18,12 @@ const TicTacToe = ({ curGame }) => {
     enemey: "",
   });
 
-  console.log("curGame: ", curGame);
-  console.log("game: ", game);
+  // console.log("curGame: ", curGame);
+  // console.log("game: ", game);
+
+  useEffect(() => {
+    getGame(curGame);
+  }, [curGame]);
 
   const getGame = async (id) => {
     try {
@@ -37,13 +38,13 @@ const TicTacToe = ({ curGame }) => {
     }
   };
 
-  useEffect(() => {
-    getGame(curGame);
-  }, [curGame]);
-
-  const handleRestart = () => {
-    setWinner("");
-    setCells(Array.from({ length: 9 }, () => ""));
+  const handleRestart = async () => {
+    try {
+      const response = await axios.put(putRestartUrl, game);
+      setGame(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -51,30 +52,30 @@ const TicTacToe = ({ curGame }) => {
       <table>
         <thead>
           <tr>
-            <th>Turn: {turn}</th>
+            <th>Turn: {game.turn}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <Cell game={game} setGame={setGame} num={0} gameId={curGame} />
-            <Cell game={game} setGame={setGame} num={1} gameId={curGame} />
-            <Cell game={game} setGame={setGame} num={2} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={0} />
+            <Cell game={game} setGame={setGame} num={1} />
+            <Cell game={game} setGame={setGame} num={2} />
           </tr>
           <tr>
-            <Cell game={game} setGame={setGame} num={3} gameId={curGame} />
-            <Cell game={game} setGame={setGame} num={4} gameId={curGame} />
-            <Cell game={game} setGame={setGame} num={5} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={3} />
+            <Cell game={game} setGame={setGame} num={4} />
+            <Cell game={game} setGame={setGame} num={5} />
           </tr>
           <tr>
-            <Cell game={game} setGame={setGame} num={6} gameId={curGame} />
-            <Cell game={game} setGame={setGame} num={7} gameId={curGame} />
-            <Cell game={game} setGame={setGame} num={8} gameId={curGame} />
+            <Cell game={game} setGame={setGame} num={6} />
+            <Cell game={game} setGame={setGame} num={7} />
+            <Cell game={game} setGame={setGame} num={8} />
           </tr>
         </tbody>
       </table>
-      {winner && (
+      {game.winner && (
         <>
-          <p>{winner} is the winner!!!</p>
+          <p>{game.winner} is the winner!!!</p>
           <Button variant="contained" onClick={handleRestart}>
             Play Again
           </Button>

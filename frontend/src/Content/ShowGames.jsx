@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -6,14 +6,13 @@ import { getGamesUrl } from "../Constants/Apis";
 
 // cells, num, turn, winner
 const columns = [
-  { field: "id", headerName: "ID", width: 50 },
+  // { field: "id", headerName: "ID", width: 50 },
   { field: "you", headerName: "Your name", width: 130 },
   { field: "enemy", headerName: "Enemy name", width: 130 },
-  { field: "cells", headerName: "Cells", width: 240 },
-  { field: "num", headerName: "Num", width: 50 },
-  { field: "turn", headerName: "Current Turn", width: 100 },
-  { field: "winner", headerName: "Winner", width: 80 },
-  { field: "status", headerName: "Status", width: 80 },
+  { field: "cells", headerName: "Cells", width: 160 },
+  { field: "turn", headerName: "Turn", width: 90 },
+  { field: "winner", headerName: "Winner", width: 90 },
+  { field: "status", headerName: "Status", width: 90 },
   // {
   //   field: "turns",
   //   headerName: "Turns",
@@ -21,18 +20,6 @@ const columns = [
   //   width: 90,
   // },
 ];
-
-// const rows = [
-//   { id: 1, enemy: "Snow", you: "Jon", turns: 35 },
-//   { id: 2, enemy: "Lannister", you: "Cersei", turns: 42 },
-//   { id: 3, enemy: "Lannister", you: "Jaime", turns: 45 },
-//   { id: 4, enemy: "Stark", you: "Arya", turns: 16 },
-//   { id: 5, enemy: "Targaryen", you: "Daenerys", turns: null },
-//   { id: 6, enemy: "Melisandre", you: null, turns: 150 },
-//   { id: 7, enemy: "Clifford", you: "Ferrara", turns: 44 },
-//   { id: 8, enemy: "Frances", you: "Rossini", turns: 36 },
-//   { id: 9, enemy: "Roxie", you: "Harvey", turns: 65 },
-// ];
 
 const ShowGames = ({ newGamesTrigger }) => {
   const [games, setGames] = useState([]);
@@ -57,7 +44,6 @@ const ShowGames = ({ newGamesTrigger }) => {
     <div style={{ height: "39vh", width: "100%" }}>
       <h1>Games</h1>
       <DataGrid
-        // rows={rows}
         rows={games}
         columns={columns}
         initialState={{
