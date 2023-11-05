@@ -49,17 +49,16 @@ const TicTacToe = ({ curGame }) => {
 
   return (
     <div className="container">
+      {game.turn ? <></> : <h2>Waiting to create or chose a game!!!</h2>}
       <table>
         <thead>
           <tr>
-            {game.turn ? (
+            {game.turn && (
               <>
                 <th>Turn: {game.turn}</th>
                 <th>{game.you}: X</th>
                 <th>{game.enemy}: O</th>
               </>
-            ) : (
-              <th>Waiting for game!!!</th>
             )}
           </tr>
         </thead>
