@@ -27,7 +27,7 @@ const TicTacToe = ({ curGame }) => {
 
   const getGame = async (id) => {
     try {
-      if (id !== "") {
+      if (id !== null) {
         const gameUrl = `${getGamesUrl}/${id}`;
         const response = await axios.get(gameUrl);
         console.log("gameUrl response: ", response.data);
@@ -59,7 +59,7 @@ const TicTacToe = ({ curGame }) => {
                 <th>{game.enemy}: O</th>
               </>
             ) : (
-              <></>
+              <th>Waiting for game!!!</th>
             )}
           </tr>
         </thead>

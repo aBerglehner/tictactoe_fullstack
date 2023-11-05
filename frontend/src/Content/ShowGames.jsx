@@ -9,7 +9,7 @@ const columns = [
   // { field: "id", headerName: "ID", width: 50 },
   { field: "you", headerName: "X", width: 130 },
   { field: "enemy", headerName: "O", width: 130 },
-  { field: "cells", headerName: "Cells", width: 160 },
+  { field: "cells", headerName: "Plays", width: 160 },
   { field: "turn", headerName: "Turn", width: 90 },
   { field: "winner", headerName: "Winner", width: 90 },
   { field: "status", headerName: "Status", width: 90 },
@@ -21,7 +21,7 @@ const columns = [
   // },
 ];
 
-const ShowGames = ({ newGamesTrigger }) => {
+const ShowGames = ({ newGamesTrigger, curGame, setCurGame }) => {
   const [games, setGames] = useState([]);
   console.log("ShowGames render");
   // console.log("ShowGames: ", games);
@@ -38,7 +38,7 @@ const ShowGames = ({ newGamesTrigger }) => {
 
   useEffect(() => {
     getGames();
-  }, [newGamesTrigger]);
+  }, [newGamesTrigger, curGame]);
 
   return (
     <div style={{ height: "39vh", width: "100%" }}>
@@ -53,6 +53,12 @@ const ShowGames = ({ newGamesTrigger }) => {
         }}
         pageSizeOptions={[5, 10, 20]}
         checkboxSelection
+        onRowSelectionModelChange={(newRowSelectionModel) => {
+          if (newRowSelectionModel.length) {
+            setCurGame(newRowSelectionModel[newRowSelectionModel.length - 1]);
+          }
+        }}
+        rowSelectionModel={curGame === null ? -1 : curGame}
       />
     </div>
   );
@@ -60,6 +66,8 @@ const ShowGames = ({ newGamesTrigger }) => {
 
 ShowGames.propTypes = {
   newGamesTrigger: PropTypes.bool.isRequired,
+  curGame: PropTypes.number,
+  setCurGame: PropTypes.func,
 };
 
 export default ShowGames;
