@@ -29,6 +29,10 @@ public class Game {
         this.turn = turn;
     }
 
+    public String getYou() {
+        return you;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -86,10 +90,10 @@ public class Game {
         if (!this.winner.isEmpty() || !this.error.isEmpty()) {
             return;
         }
-        if (this.turn.equals("x")) {
-            setTurn("o");
+        if (this.turn.equals("X")) {
+            setTurn("O");
         } else {
-            setTurn("x");
+            setTurn("X");
         }
     }
 
@@ -97,9 +101,12 @@ public class Game {
         if (!this.winner.isEmpty()) {
             setError(this.turn + " already won the game");
         } else if (this.cells.get(num).isEmpty()) {
+            setStatus("in progress");
             this.cells.set(num, this.turn);
             if (checkIfGameWon(this.turn, this.cells)) {
-                setWinner(this.turn);
+                String curWinner = this.turn.equals("X") ? this.you : this.enemy;
+                setWinner(curWinner);
+                setStatus("over");
             }
         } else {
             setError("try free field");

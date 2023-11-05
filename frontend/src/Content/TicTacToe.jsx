@@ -15,11 +15,11 @@ const TicTacToe = ({ curGame }) => {
     turn: "",
     winner: "",
     you: "",
-    enemey: "",
+    enemy: "",
   });
 
   // console.log("curGame: ", curGame);
-  // console.log("game: ", game);
+  console.log("game: ", game);
 
   useEffect(() => {
     getGame(curGame);
@@ -52,7 +52,15 @@ const TicTacToe = ({ curGame }) => {
       <table>
         <thead>
           <tr>
-            <th>Turn: {game.turn}</th>
+            {game.turn ? (
+              <>
+                <th>Turn: {game.turn}</th>
+                <th>{game.you}: X</th>
+                <th>{game.enemy}: O</th>
+              </>
+            ) : (
+              <></>
+            )}
           </tr>
         </thead>
         <tbody>

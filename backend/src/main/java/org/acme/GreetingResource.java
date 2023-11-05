@@ -33,7 +33,6 @@ public class GreetingResource {
         Optional<Game> searchedGame = Constants.list.stream().filter(e -> e.getId() == cell.getId()).findFirst();
         if (searchedGame.isPresent()) {
             searchedGame.get().setError("");
-            searchedGame.get().setStatus("playing");
             searchedGame.get().handleTurn(cell.getNum());
             searchedGame.get().swapTurn();
         }
@@ -53,6 +52,7 @@ public class GreetingResource {
             List<String> cellList = IntStream.rangeClosed(0, 8).mapToObj(String::valueOf).map(e -> "").collect(Collectors.toList());
             searchedGame.get().setCells(cellList);
             searchedGame.get().setWinner("");
+            searchedGame.get().setStatus("in progress");
         }
         return Response.ok(searchedGame).build();
     }
@@ -62,6 +62,7 @@ public class GreetingResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGameById(@PathParam("id") int id) {
         System.out.println("get game by id api: ");
+        System.out.println("id: " + id);
         System.out.println("--------------------------------------------------");
         Optional<Game> searchedGame = Constants.list.stream().filter(game -> game.getId() == id).findFirst();
         return Response.ok(searchedGame).build();
@@ -75,8 +76,9 @@ public class GreetingResource {
         System.out.println("--------------------------------------------------");
         List<String> cellList = IntStream.rangeClosed(0, 8).mapToObj(String::valueOf).map(e -> "").collect(Collectors.toList());
         game.setCells(cellList);
-        game.setTurn("x");
+        game.setTurn("X");
         game.setWinner("");
+        game.setStatus("started");
         Constants.list.add(game);
         Constants.curId++;
 

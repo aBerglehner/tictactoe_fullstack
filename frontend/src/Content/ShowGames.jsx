@@ -7,8 +7,8 @@ import { getGamesUrl } from "../Constants/Apis";
 // cells, num, turn, winner
 const columns = [
   // { field: "id", headerName: "ID", width: 50 },
-  { field: "you", headerName: "Your name", width: 130 },
-  { field: "enemy", headerName: "Enemy name", width: 130 },
+  { field: "you", headerName: "X", width: 130 },
+  { field: "enemy", headerName: "O", width: 130 },
   { field: "cells", headerName: "Cells", width: 160 },
   { field: "turn", headerName: "Turn", width: 90 },
   { field: "winner", headerName: "Winner", width: 90 },
