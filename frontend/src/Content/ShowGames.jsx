@@ -41,17 +41,17 @@ const ShowGames = ({ newGamesTrigger, curGame, setCurGame }) => {
   }, [newGamesTrigger, curGame]);
 
   return (
-    <div style={{ height: "39vh", width: "100%" }}>
+    <div style={{ height: "90%", width: "100%" }}>
       <h1>Games</h1>
       <DataGrid
         rows={games}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0 },
           },
         }}
-        pageSizeOptions={[5, 10, 20]}
+        pageSizeOptions={[5, 10, 25]}
         checkboxSelection
         onRowSelectionModelChange={(newRowSelectionModel) => {
           if (newRowSelectionModel.length) {
@@ -59,6 +59,7 @@ const ShowGames = ({ newGamesTrigger, curGame, setCurGame }) => {
           }
         }}
         rowSelectionModel={curGame === null ? -1 : curGame}
+        autoPageSize
       />
     </div>
   );
