@@ -17,7 +17,7 @@ function App() {
       <CssBaseline />
       <Header />
       <Content />
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 }

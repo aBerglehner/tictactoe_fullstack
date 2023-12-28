@@ -41,7 +41,7 @@ const ShowGames = ({ newGamesTrigger, curGame, setCurGame }) => {
   }, [newGamesTrigger, curGame]);
 
   return (
-    <div style={{ height: "90%", width: "100%" }}>
+    <div style={{ height: "87%", width: "100%" }}>
       <h1>Games</h1>
       <DataGrid
         rows={games}

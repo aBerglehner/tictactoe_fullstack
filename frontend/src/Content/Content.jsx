@@ -43,9 +43,10 @@ const Content = () => {
       sx={{
         flexGrow: 1,
         padding: 2,
+        height: "90vh",
       }}
     >
-      <Paper elevation={3} sx={{ p: 2, minHeight: "84vh" }}>
+      <Paper elevation={3} sx={{ p: 2, minHeight: "88vh" }}>
         <h1>Welcome to Your App</h1>
         <p>Create your new Game:</p>
 

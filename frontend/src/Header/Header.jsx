@@ -7,6 +7,7 @@ const Header = () => {
       position="static"
       sx={{
         backgroundColor: "#116ac2",
+        height: "7vh",
       }}
     >
       <Toolbar>
